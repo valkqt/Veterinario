@@ -2,20 +2,30 @@
 
 @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
 {
-    @Html.LabelFor(model => model.Nome)
-    @Html.EditorFor(model => model.Nome)
+    @Html.AntiForgeryToken()
 
-    @Html.Label("Tipologia:")
-    @Html.RadioButton("Tipo", "Farmaci")<p>Farmaci</p>
-    @Html.RadioButton("Tipo", "Alimentazione")<p>Alimentazione</p>
+    <div>
+        @Html.LabelFor(model => model.Nome)
+        @Html.EditorFor(model => model.Nome)
+    </div>
 
-    @Html.LabelFor(model => model.Quantità)
-    @Html.EditorFor(model => model.Quantità)
 
-    @Html.HiddenFor(model => model.Company.id)
+    <div>
+        <p>Tipologia:</p>
+        @Html.RadioButton("Tipo", "Farmaci")<label>Farmaci</label>
+        @Html.RadioButton("Tipo", "Alimentazione")<label>Alimentazione</label>
+    </div>
 
-    <p>Scegli la ditta fornitrice</p>
-    @Html.DropDownListFor(model => model.Company.id, new SelectList(ViewBag.Companies, "Id", "Nome"), "Seleziona Compagnia")
+
+    <div>
+        @Html.LabelFor(model => model.Quantit�)
+        @Html.EditorFor(model => model.Quantit�)
+    </div>
+
+    <div>
+        <p>Scegli la ditta fornitrice</p>
+        @Html.DropDownList("SelectedCompanyId", (IEnumerable<SelectListItem>)ViewBag.CompanyOptions, "Seleziona Compagnia")
+    </div>
 
     <input type="submit" value="Aggiungi Prodotto" />
 }
