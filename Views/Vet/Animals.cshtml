@@ -7,14 +7,14 @@
 
 }
 
-<h2>Animals</h2>
+<h2  class="titoloPagina fw-bold">LISTA ANIMALI REGISTRATI</h2>
 @if (TempData["error"] != null)
 {
     <p>@TempData["error"]</p>
 }
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pepe">
-    Addsss
+<button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#pepe">
+    Aggiungi Animale
 </button>
 
 @using (Html.BeginForm("AddAnimal", "Vet", FormMethod.Post))
@@ -65,8 +65,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">aggiungi</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="submit" class="btn btn-primary">Aggiungi</button>
                 </div>
             </div>
         </div>
@@ -123,6 +123,7 @@
             <th scope="col">Foto</th>
             <th scope="col">Data Registrazione</th>
             <th scope="col">Data di Nascita</th>
+            <th scope="col">Presunta?</th>
             <th scope="col">Nome Proprietario</th>
             <th scope="col">Cognome Proprietario</th>
             <th scope="col">Telefono Proprietario</th>
@@ -184,7 +185,7 @@
                             </div>
                         </div>
                     }
-                    @Html.ActionLink("Terapia", "Therapy", "Vet", new { id = animals[i].id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Terapia", "Therapy", "Vet", new { id = animals[i].id }, new { @class = "btn btn-primary my-3" })
 
 
                 </td>

@@ -1,4 +1,27 @@
-﻿/* Set padding to keep content from hitting the edges */
+﻿@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap');
+
+* {
+    font-family: 'Sen', sans-serif;
+}
+
+body {
+    background-color: #fcfced
+}
+
+
+
+.cardAnimale {
+    border: 4px solid #198754
+}
+
+
+.titoloPagina{
+    font-size: 30px;
+    font-weight: 400;
+    color: #000000;
+    text-align: center;
+}
+/* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
@@ -18,3 +41,5 @@ select,
 textarea {
     max-width: 280px;
 }
+
+

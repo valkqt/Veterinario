@@ -1,5 +1,7 @@
 @model Veterinario3.Models.Company
 
+<h2 class="titoloPagina fw-bold">Aggiungi azienda alla lista fornitori:</h2>
+
 @using (Html.BeginForm("AddCompany", "Company", FormMethod.Post))
 {
     @Html.LabelFor(model => model.Nome)
@@ -14,5 +16,5 @@
     @Html.EditorFor(model => model.Recapito)
 
 
-    <input type="submit" value="Aggiungi Compagnia" />
+    <input type="submit" value="Aggiungi Azienda" />
 }
