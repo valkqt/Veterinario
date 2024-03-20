@@ -1,0 +1,49 @@
+﻿﻿@model List<Veterinario3.Models.Animal>
+
+@{
+    ViewBag.Title = "Animals";
+}
+
+<h2>Animals</h2>
+
+<table class="table">
+    <thead>
+
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipologia</th>
+            <th scope="col">Colore</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Data Registrazione</th>
+            <th scope="col">Data di Nascita</th>
+            <th scope="col">Nome Proprietario</th>
+            <th scope="col">Cognome Proprietario</th>
+            <th scope="col">Telefono Proprietario</th>
+            <th scope="col">Microchip</th>
+            <th scope="col">Controlli</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Veterinario3.Models.Animal animal in Model)
+        {
+            <tr>
+                <th scope="row">@animal.id</th>
+                <td>@animal.Name</td>
+                <td>@animal.Tipologia</td>
+                <td>@animal.Colore</td>
+                <td>@animal.Foto</td>
+                <td>@animal.DataReg</td>
+                <td>@animal.DataNascita</td>
+                <td>@animal.NomeProprietario</td>
+                <td>@animal.CognomeProprietario</td>
+                <td>@animal.TelefonoProprietario</td>
+                <td>@animal.IdMicrochip</td>
+                <td>@Html.ActionLink("Visita", "Therapy", "Vet", new { id = animal.id }, null)</td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>

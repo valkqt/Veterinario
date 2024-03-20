@@ -1,0 +1,18 @@
+@model Veterinario3.Models.Company
+
+@using (Html.BeginForm("AddCompany", "Company", FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Nome)
+    @Html.EditorFor(model => model.Nome)
+
+
+    @Html.LabelFor(model => model.Indirizzo)
+    @Html.EditorFor(model => model.Indirizzo)
+
+
+    @Html.LabelFor(model => model.Recapito)
+    @Html.EditorFor(model => model.Recapito)
+
+
+    <input type="submit" value="Aggiungi Compagnia" />
+}

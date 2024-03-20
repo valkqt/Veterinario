@@ -1,0 +1,21 @@
+@model Veterinario3.Models.Product
+
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Nome)
+    @Html.EditorFor(model => model.Nome)
+
+    @Html.Label("Tipologia:")
+    @Html.RadioButton("Tipo", "Farmaci")<p>Farmaci</p>
+    @Html.RadioButton("Tipo", "Alimentazione")<p>Alimentazione</p>
+
+    @Html.LabelFor(model => model.Quantità)
+    @Html.EditorFor(model => model.Quantità)
+
+    @Html.HiddenFor(model => model.Company.id)
+
+    <p>Scegli la ditta fornitrice</p>
+    @Html.DropDownListFor(model => model.Company.id, new SelectList(ViewBag.Companies, "Id", "Nome"), "Seleziona Compagnia")
+
+    <input type="submit" value="Aggiungi Prodotto" />
+}
