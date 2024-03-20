@@ -1,0 +1,24 @@
+﻿@model Veterinario3.Models.Animal
+
+<div class="container" style="max-width: 300px;">
+    <div class="card">
+        <img src="@Model.Foto" class="card-img-top" alt="Foto dell'animale" style="max-width: 100%; max-height: 100%;">
+        <div class="card-body">
+            <h5 class="card-title">Animale in ricovero</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Nome:</strong> @Model.Name</li>
+                <li class="list-group-item"><strong>Tipologia:</strong> @Model.Tipologia</li>
+                <li class="list-group-item"><strong>Colore:</strong> @Model.Colore</li>
+                <li class="list-group-item"><strong>Data di nascita:</strong> @Model.DataNascita.ToShortDateString()</li>
+            </ul>
+            <hr>
+            <h5 class="card-title">Dati del proprietario</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Nome:</strong> @Model.NomeProprietario</li>
+                <li class="list-group-item"><strong>Cognome:</strong> @Model.CognomeProprietario</li>
+                <li class="list-group-item"><strong>Telefono:</strong> @Model.TelefonoProprietario</li>
+            </ul>
+        </div>
+    </div>
+</div>
+

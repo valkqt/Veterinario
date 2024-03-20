@@ -127,8 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnimalController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VetController.cs" />
@@ -206,6 +208,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Animal\SearchAnimal.cshtml" />
+    <Content Include="Views\Animal\_AnimalDetailsPartial.cshtml" />
+    <Content Include="Views\Animal\_ErrorMessagePartial.cshtml" />
     <Content Include="Views\Vet\Animals.cshtml" />
     <Content Include="Views\Vet\Therapy.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
@@ -214,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
