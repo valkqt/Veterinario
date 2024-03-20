@@ -35,9 +35,6 @@ namespace Veterinario3.Models
         [Required]
         [Display(Name = "Presunta?")]
         public bool Presunta { get; set; } = false;
-
-        [NotMapped]
-        public Admission admission { get; set; } = new Admission();
         public virtual ICollection<Admission> Admission { get; set; }
         public virtual ICollection<Therapy> Therapy { get; set; }
 
