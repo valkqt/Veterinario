@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,6 +8,7 @@ using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
 {
+    [Authorize(Roles = "farmacista")]
     public class CompanyController : Controller
     {
         private VetContext db = new VetContext();

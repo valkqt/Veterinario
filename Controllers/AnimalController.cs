@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Veterinario3.Models;
 
+[AllowAnonymous]
 public class AnimalController : Controller
 {
     private readonly VetContext _db;

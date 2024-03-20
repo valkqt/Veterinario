@@ -7,6 +7,7 @@ using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
 {
+    [Authorize(Roles = "farmacista")]
     public class ProductController : Controller
     {
         private VetContext db = new VetContext();

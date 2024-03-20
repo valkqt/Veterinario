@@ -7,6 +7,7 @@ using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
 {
+    [Authorize(Roles = "veterinario")]
     public class VetController : Controller
     {
         // GET: Vet
@@ -14,7 +15,8 @@ namespace Veterinario3.Controllers
 
         public ActionResult Animals()
         {
-            return View(db.Animals.ToList());
+            ViewBag.Animals = db.Animals.ToList();
+            return View();
         }
 
         [HttpGet]
@@ -73,6 +75,59 @@ namespace Veterinario3.Controllers
             };
 
             return View("Therapy", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Ricovero(AnimalsViewModel vm, int animalID)
+        {
+
+            Admission admission = vm.admission;
+            admission.animalID = animalID;
+
+            db.Admissions.Add(admission);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Animals");
+        }
+
+        [HttpPost]
+        public ActionResult AddAnimal(AnimalsViewModel vm)
+        {
+            Animal animal = vm.animal;
+            TempData["error"] = "pepe";
+            db.Animals.Add(animal);
+            db.SaveChanges();
+
+            return RedirectToAction("Animals");
+        }
+
+        public ActionResult Mensili()
+        {
+            return View();
+        }
+
+        public JsonResult Monthly()
+        {
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var result = (from ad in db.Admissions
+                          join al in db.Animals on ad.animalID equals al.id
+                          where (ad.DataInizio >= lastMonth)
+                          select new
+                          {
+                              admissionId = ad.id,
+                              StartDate = ad.DataInizio,
+                              Nome = al.Name,
+                              Tipologia = al.Tipologia,
+                              Colore = al.Colore,
+                              DataReg = al.DataReg,
+                              DataNascita = al.DataNascita,
+                              Microchip = al.IdMicrochip,
+                          }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+
         }
     }
 }

@@ -1,0 +1,54 @@
+﻿@using Veterinario3.Models
+
+@model List<Admission>
+@{
+    ViewBag.Title = "Mensili";
+    List<Admission> list = new List<Admission>();
+}
+
+<h2>Mensili</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Data Inizio Ricovero</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipologia</th>
+            <th scope="col">Colore</th>
+            <th scope="col">Data Registrazione Animale</th>
+            <th scope="col">Data di Nascita</th>
+            <th scope="col">#Microchip</th>
+
+        </tr>
+    </thead>
+    <tbody id="target">
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        const table = document.getElementById("target")
+
+        async function FetchMonthly() {
+            const response = await fetch('@Url.Action("Monthly", "Vet")')
+            const data = await response.json();
+            for (elem of data) {
+                const tr = document.createElement("tr")
+                table.appendChild(tr)
+                for (let [key, value] of Object.entries(elem)) {
+                    if (key == "DataReg" || key == "DataNascita" || key == "StartDate") {
+                        value = new Date(parseInt(value.substr(6))).toISOString().slice(0,10)
+                    }
+                    const td = document.createElement("td")
+                    td.innerText = value
+                    tr.appendChild(td)
+                }
+            }
+
+
+            return data
+        }
+        FetchMonthly();
+
+    </script> }
