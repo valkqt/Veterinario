@@ -1,4 +1,4 @@
-@model Veterinario3.Models.Product
+ï»¿@model Veterinario3.Models.Product
 
 @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
 {
@@ -9,15 +9,17 @@
         @Html.EditorFor(model => model.Nome)
     </div>
 
+
     <div>
         <p>Tipologia:</p>
         @Html.RadioButton("Tipo", "Farmaci")<label>Farmaci</label>
         @Html.RadioButton("Tipo", "Alimentazione")<label>Alimentazione</label>
     </div>
 
+
     <div>
-        @Html.LabelFor(model => model.Quantità)
-        @Html.EditorFor(model => model.Quantità)
+        @Html.LabelFor(model => model.Quantitï¿½)
+        @Html.EditorFor(model => model.Quantitï¿½)
     </div>
 
     <div>
