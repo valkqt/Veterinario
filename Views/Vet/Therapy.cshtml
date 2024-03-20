@@ -1,0 +1,55 @@
+﻿﻿@model Veterinario3.Models.AnimalTherapyViewModel
+
+<h2>Visita per l'animale: @Model.Animal.Name</h2>
+<p>Data Registrazione: @Model.Animal.DataReg.ToShortDateString()</p>
+<p>Tipo di Animale: @Model.Animal.Tipologia</p>
+<p>Proprietario: @Model.Animal.NomeProprietario</p>
+<p>Telefono Proprietario: @Model.Animal.TelefonoProprietario</p>
+
+@if (Model.Therapies.Any())
+{
+    <h3>Cronistoria delle Visite:</h3>
+
+    <table class="table">
+        <tr>
+            <th>Data della Visita</th>
+            <th>Diagnosi</th>
+            <th>Descrizione Cura</th>
+        </tr>
+        @foreach (var terapia in Model.Therapies)
+        {
+            <tr>
+                <td>@terapia.DataCura.ToShortDateString()</td>
+                <td>@terapia.Diagnosi</td>
+                <td>@terapia.DescrizioneCura</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Non ci sono terapie registrate per questo animale.</p>
+}
+
+<h3>Inserisci Nuova Terapia:</h3>
+
+<form action="@Url.Action("NewTherapy", "Vet")" method="post">
+    <input type="hidden" id="AnimalId" name="AnimalId" value="@Model.Animal.id" />
+    <div class="form-group">
+        <label for="DataCura" class="control-label">Data Cura</label>
+        <input type="date" id="DataCura" name="DataCura" class="form-control" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Diagnosi" class="control-label">Diagnosi</label>
+        <input type="text" id="Diagnosi" name="Diagnosi" class="form-control" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="DescrizioneCura" class="control-label">Descrizione Cura</label>
+        <input type="text" id="DescrizioneCura" name="DescrizioneCura" class="form-control" />
+        <span class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+<p>@Html.ActionLink("Torna indietro", "Animals", "Vet")</p>
