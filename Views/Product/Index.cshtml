@@ -1,0 +1,18 @@
+@model List<Veterinario3.Models.Company>
+
+@foreach (var company in Model)
+{
+    <h3>@company.Nome</h3>
+    <ul>
+        @foreach (var product in company.Product)
+        {
+            <li>
+                @product.Nome - Quantità: @product.Quantità
+                @using (Html.BeginForm("IncreaseQuantity", "Product", new {  }, FormMethod.Post))
+                {
+                    <input type="submit" value="Ordina" />
+                }
+            </li>
+        }
+    </ul>
+}
