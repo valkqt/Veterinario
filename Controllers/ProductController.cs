@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Veterinario3.Models;
 
-namespace BW5.Controllers
+namespace Veterinario3.Controllers
 {
     public class ProductController : Controller
     {
