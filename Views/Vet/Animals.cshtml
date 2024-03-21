@@ -1,10 +1,116 @@
-﻿﻿@model List<Veterinario3.Models.Animal>
+﻿@using Veterinario3.Models;
+﻿@model AnimalsViewModel
 
 @{
     ViewBag.Title = "Animals";
+    var animals = ViewBag.Animals as List<Animal>;
+
 }
 
 <h2>Animals</h2>
+@if (TempData["error"] != null)
+{
+    <p>@TempData["error"]</p>
+}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pepe">
+    Addsss
+</button>
+
+@using (Html.BeginForm("AddAnimal", "Vet", FormMethod.Post))
+{
+
+    <div class="modal fade" id="pepe">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.LabelFor(m => m.animal.Name, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.Tipologia, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.Tipologia, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.Colore, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.Colore, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.DataNascita, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.DataNascita, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+                    @Html.LabelFor(m => m.animal.Presunta, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.CheckBoxFor(m => m.animal.Presunta, new { htmlAttributes = new { @class = "form-check" } })
+
+                    @Html.LabelFor(m => m.animal.IdMicrochip, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.IdMicrochip, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.Foto, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.Foto, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <hr />
+                    <h5>Informazioni Proprietario</h5>
+
+                    @Html.LabelFor(m => m.animal.CognomeProprietario, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.CognomeProprietario, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.NomeProprietario, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.NomeProprietario, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.LabelFor(m => m.animal.TelefonoProprietario, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.animal.TelefonoProprietario, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">aggiungi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("Ricovero", "Vet", new { animalId = animals[0].id }, FormMethod.Post))
+{
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@("#Modal" + animals[0].id)">
+        Ricovero
+    </button>
+
+    @Html.AntiForgeryToken()
+
+    <!-- Modal -->
+    <div class="modal fade" id="@("Modal" + animals[0].id)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @Html.HiddenFor(m => m.admission.animalID)
+
+                    @Html.LabelFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+                    @Html.LabelFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-label" } })
+                    @Html.EditorFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Conferma ricovero</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@Html.ActionLink("Monthly", "Mensili", "Vet")
 
 <table class="table">
     <thead>
@@ -26,21 +132,62 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Veterinario3.Models.Animal animal in Model)
+        @for (int i = 0; i < animals.Count(); i++)
         {
             <tr>
-                <th scope="row">@animal.id</th>
-                <td>@animal.Name</td>
-                <td>@animal.Tipologia</td>
-                <td>@animal.Colore</td>
-                <td>@animal.Foto</td>
-                <td>@animal.DataReg</td>
-                <td>@animal.DataNascita</td>
-                <td>@animal.NomeProprietario</td>
-                <td>@animal.CognomeProprietario</td>
-                <td>@animal.TelefonoProprietario</td>
-                <td>@animal.IdMicrochip</td>
-                <td>@Html.ActionLink("Visita", "Therapy", "Vet", new { id = animal.id }, null)</td>
+                <th scope="row">@animals[i].id</th>
+                <td>@animals[i].Name</td>
+                <td>@animals[i].Tipologia</td>
+                <td>@animals[i].Colore</td>
+                <td><img style="width: 100px; height: 100px; object-fit: cover;" src="@animals[i].Foto" alt="@animals[i].Name" /></td>
+                <td>@animals[i].DataReg.ToShortDateString()</td>
+                <td>@animals[i].DataNascita.ToShortDateString()</td>
+                <td>@animals[i].Presunta</td>
+                <td>@animals[i].NomeProprietario</td>
+                <td>@animals[i].CognomeProprietario</td>
+                <td>@animals[i].TelefonoProprietario</td>
+                <td>@animals[i].IdMicrochip</td>
+                <td>
+
+                    @using (Html.BeginForm("Ricovero", "Vet", new { animalId = animals[i].id }, FormMethod.Post))
+                    {
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@("#Modal" + animals[i].id)">
+                            Ricovero
+                        </button>
+
+                        @Html.AntiForgeryToken()
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="@("Modal" + animals[i].id)">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.HiddenFor(m => m.admission.animalID)
+
+                                        @Html.LabelFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
+                                        @Html.EditorFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+                                        @Html.LabelFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-label" } })
+                                        @Html.EditorFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Conferma ricovero</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @Html.ActionLink("Terapia", "Therapy", "Vet", new { id = animals[i].id }, new { @class = "btn btn-primary" })
+
+
+                </td>
 
             </tr>
         }

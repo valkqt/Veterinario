@@ -1,4 +1,4 @@
-@model List<Veterinario3.Models.Company>
+Ôªø@model List<Veterinario3.Models.Company>
 
 @foreach (var company in Model)
 {
@@ -7,8 +7,8 @@
         @foreach (var product in company.Product)
         {
             <li>
-                @product.Nome - Quantit‡: @product.Quantit‡
-                @using (Html.BeginForm("IncreaseQuantity", "Product", new { productId = product.Id }, FormMethod.Post))
+                @product.Nome - Quantit√† @product.Quantit√†)
+                @using (Html.BeginForm("IncreaseQuantity", "Product", new {  }, FormMethod.Post))
                 {
                     <input type="submit" value="Ordina" />
                 }

@@ -216,7 +216,11 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Company\AddCompany.cshtml" />
+
     <Content Include="Views\Box\Index.cshtml" />
+
+    <Content Include="Views\Vet\Mensili.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
