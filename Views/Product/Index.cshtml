@@ -8,7 +8,7 @@
         {
             <li>
                 @product.Nome - Quantità @product.Quantità)
-                @using (Html.BeginForm("IncreaseQuantity", "Product", new {  }, FormMethod.Post))
+                @using (Html.BeginForm("IncreaseQuantity", "Product", new { productId = product.Id  }, FormMethod.Post))
                 {
                     <input type="submit" value="Ordina" />
                 }
