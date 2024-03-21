@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -82,31 +84,47 @@ namespace Veterinario3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Ricovero(AnimalsViewModel vm, int animalID)
         {
-
             Admission admission = vm.admission;
-            admission.animalID = animalID;
+            vm.admission.animalID = animalID;
+            if (ModelState.IsValid)
+            {
+                db.Admissions.Add(admission);
+                db.SaveChanges();
+                TempData["success"] = "true";
 
-            db.Admissions.Add(admission);
-            db.SaveChanges();
+            }
+            else
+            {
+                TempData["error"] = "true";
 
+            }
+            return RedirectToAction("Animals", "Vet");
+        }
+        public ActionResult Ricoveri()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "Tutti", Value = "1" });
+            items.Add(new SelectListItem { Text = "Mensili", Value = "2" });
+            items.Add(new SelectListItem { Text = "Attivi", Value = "3" });
 
-            return RedirectToAction("Animals");
+            ViewBag.options = items;
+            return View();
         }
 
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddAnimal(AnimalsViewModel vm, HttpPostedFileBase FileFoto)
         {
             if (ModelState.IsValid)
             {
                 Animal animal = vm.animal;
-                animal.Foto = "sadsa";
                 if (FileFoto != null && FileFoto.ContentLength > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileFoto.FileName);
                     var path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
                     FileFoto.SaveAs(path);
                     animal.FileFoto = fileName;
-                    animal.Foto = fileName;
                 }
                 db.Animals.Add(animal);
                 db.SaveChanges();
@@ -119,19 +137,77 @@ namespace Veterinario3.Controllers
 
 
 
+            return RedirectToAction("Animals", "Vet");
+        }
+
+
+        [HttpPost]
+        public ActionResult EditAnimal(AnimalsViewModel vm, int animalId, HttpPostedFileBase FileFoto)
+        {
+            var animal = db.Animals.Where(a => a.id == animalId).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                TempData["foto"] = FileFoto;
+
+                if (FileFoto != null && FileFoto.ContentLength > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileFoto.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                    FileFoto.SaveAs(path);
+                    animal.FileFoto = fileName;
+                }
+
+                animal.Name = vm.animal.Name;
+                animal.NomeProprietario = vm.animal.NomeProprietario;
+                animal.CognomeProprietario = vm.animal.CognomeProprietario;
+                animal.Colore = vm.animal.Colore;
+                animal.DataNascita = vm.animal.DataNascita;
+                animal.Tipologia = vm.animal.Tipologia;
+                animal.IdMicrochip = vm.animal.IdMicrochip;
+                db.Entry(animal).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["success"] = "true";
+            }
+            else
+            {
+                TempData["error"] = "true";
+            }
+
             return RedirectToAction("Animals");
         }
 
-        public ActionResult Mensili()
+        [HttpPost]
+        public ActionResult EditAdmission([Bind(Include = "id, animalID, DataInizio, DataFine")] Admission admission)
         {
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Text = "Tutti", Value = "1" });
-            items.Add(new SelectListItem { Text = "Mensili", Value = "2" });
-            items.Add(new SelectListItem { Text = "Attivi", Value = "3" });
-
-            ViewBag.options = items;
-            return View();
+            if (ModelState.IsValid)
+            {
+                db.Entry(admission).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["success"] = "true";
+                return RedirectToAction("Ricoveri", "Vet");
+            }
+            else
+            {
+                TempData["error"] = "true";
+            }
+            return View(admission);
         }
+
+        public ActionResult EditAdmission(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Admission ricovero = db.Admissions.Find(id);
+            if (ricovero == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ricovero);
+        }
+
 
         public JsonResult Monthly()
         {
@@ -142,8 +218,8 @@ namespace Veterinario3.Controllers
                           select new
                           {
                               admissionId = ad.id,
-                              StartDate = ad.DataInizio,
-                              EndDate = ad.DataFine,
+                              DataInizio = ad.DataInizio,
+                              DataFine = ad.DataFine,
                               Nome = al.Name,
                               Tipologia = al.Tipologia,
                               Colore = al.Colore,
@@ -162,8 +238,8 @@ namespace Veterinario3.Controllers
                           select new
                           {
                               admissionId = ad.id,
-                              StartDate = ad.DataInizio,
-                              EndDate = ad.DataFine,
+                              DataInizio = ad.DataInizio,
+                              DataFine = ad.DataFine,
                               Nome = al.Name,
                               Tipologia = al.Tipologia,
                               Colore = al.Colore,
@@ -181,12 +257,12 @@ namespace Veterinario3.Controllers
             var min = DateTime.MinValue;
             var result = (from ad in db.Admissions
                           join al in db.Animals on ad.animalID equals al.id
-                          where (ad.DataFine > min)
+                          where (ad.DataFine == null)
                           select new
                           {
                               admissionId = ad.id,
-                              StartDate = ad.DataInizio,
-                              EndDate = ad.DataFine,
+                              DataInizio = ad.DataInizio,
+                              DataFine = ad.DataFine,
                               Nome = al.Name,
                               Tipologia = al.Tipologia,
                               Colore = al.Colore,
@@ -205,7 +281,7 @@ namespace Veterinario3.Controllers
             db.Entry(admission).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
-            return RedirectToAction("Mensili", "Vet");
+            return RedirectToAction("Ricoveri", "Vet");
         }
 
 

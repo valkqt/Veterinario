@@ -2,17 +2,29 @@
 
 @model List<Admission>
 @{
-    ViewBag.Title = "Mensili";
+    ViewBag.Title = "Ricoveri";
     var options = ViewBag.options as List<SelectListItem>;
     List<Admission> list = new List<Admission>();
+    string error = (string)TempData["error"] ?? "false";
+    string success = (string)TempData["success"] ?? "false";
+
 }
 
-<h2>Mensili</h2>
-@if (TempData["id"] != null)
-            {
-    <p>@TempData["id"]</p>
-            }
-@Html.DropDownList("selectList", options, new { @class = "css-class", @id = "selectList" })
+<h2 class="text-center">Ricoveri</h2>
+@if (error == "true")
+{
+    <div id="errMsg" class="alert alert-warning" role="alert">
+        C'è stato un errore.
+    </div>
+}
+
+@if (success == "true")
+{
+    <div id="successMsg" class="alert alert-success" role="alert">
+        Inserimento effettuato con successo.
+    </div>
+}
+@Html.DropDownList("selectList", options, new { @class = "css-class d-block", @id = "selectList", @style = "margin: 0 auto; width: 250px; height: 2rem;" })
 <table class="table table-striped">
     <thead>
         <tr>
@@ -45,11 +57,14 @@
                 const tr = document.createElement("tr")
                 table.appendChild(tr)
                 for (let [key, value] of Object.entries(elem)) {
-                    if (key == "DataReg" || key == "DataNascita" || key == "StartDate" || key == "EndDate") {
-                        value = new Date(parseInt(value.substr(6))).toISOString().slice(0, 10)
-                        if (value === "0001-01-01") {
-                            value = "N/A"
-                        }
+                    if (key.includes("Data") && value !== null) {
+                        value = new Date(parseInt((value).substr(6)) + 86400000).toISOString().slice(0, 10)
+
+
+                    } else if (value === null) {
+                        value = "N/A"
+                    } else {
+
                     }
                     const td = document.createElement("td")
                     td.innerText = value
@@ -58,12 +73,26 @@
                 }
                 const td = document.createElement("td")
                 const link = document.createElement("a")
-                link.innerText = "Go back"
-                tr.appendChild(td)
+                link.innerText = "Segna come finito"
+                link.classList.add("btn", "btn-primary")
                 link.href = `/Vet/MarkAsEnded?id=${elem.admissionId}`
+                if (elem.DataFine !== null) {
+                    link.href = ""
+                    link.classList.add("disabled")
+
+                }
+                const link2 = document.createElement("a")
+                link2.innerText = "Modifica"
+                link2.classList.add("btn", "btn-primary")
+                link2.href = `/Vet/EditAdmission?id=${elem.admissionId}`
+
+
+                tr.appendChild(td)
                 td.appendChild(link)
+                td.appendChild(link2)
+
             }
-        
+
 
 
 

@@ -17,29 +17,27 @@ namespace Veterinario3.Models
         [Display(Name = "Nome")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Campo richiesto.")]
-        [Display(Name = "Tipologia")]
+        [Display(Name = "Tipologia*")]
         public string Tipologia { get; set; }
         [Display(Name = "Colore")]
         public string Colore { get; set; }
         [Column(TypeName = "datetime2")]
         [DataType(DataType.Date)]
-        [Display(Name = "Data di Nascita")]
+        [Display(Name = "Data di Nascita*")]
+        [Required]
         public DateTime DataNascita { get; set; }
         [StringLength(32, ErrorMessage = "Inserire un codice di massimo 32 caratteri")]
         [Index(IsUnique = true)]
         [Display(Name = "#Microchip")]
         public string IdMicrochip { get; set; }
         [Required(ErrorMessage = "Campo richiesto.")]
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome**")]
         public string NomeProprietario { get; set; } = "Comune di Napoli";
         [Display(Name = "Cognome")]
         public string CognomeProprietario { get; set; }
-        [Display(Name = "Telefono")]
+        [Display(Name = "Telefono**")]
         [Required(ErrorMessage = "Campo richiesto.")]
         public string TelefonoProprietario { get; set; } = "0817951111";
-        [Display(Name = "Foto Animale")]
-        public string Foto { get; set; }
-        [NotMapped]
         [Display(Name = "Foto Animale")]
         public string FileFoto { get; set; }
         [Required(ErrorMessage = "Campo richiesto.")]
