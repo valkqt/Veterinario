@@ -10,15 +10,14 @@ namespace Veterinario3.Models
     public class Box
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
         public string CodiceCassetto { get; set; }
-
         public string CodiceProdotto { get; set; }
 
         public int ContainerId { get; set; }
+        public virtual Container Container { get; set; }
 
-        public int productId { get; set; }
-        public virtual Product product { get; set; }
-        public virtual Container container { get; set; }
+
+
     }
 }
