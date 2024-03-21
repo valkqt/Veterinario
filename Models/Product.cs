@@ -18,5 +18,8 @@ namespace Veterinario3.Models
         [ForeignKey("Company")]
         public int SelectedCompanyId { get; set; }
         public Company Company { get; set; }
+
+        public int UsageId { get; set; }
+        public virtual Usage Usage { get; set; }
     }
 }

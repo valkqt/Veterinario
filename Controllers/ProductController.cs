@@ -18,6 +18,7 @@ namespace Veterinario3.Controllers
         public ActionResult AddProduct()
         {
             var companies = db.Companies.ToList();
+            var usages = db.Usages.ToList();
 
             var companyOptions = companies.Select(c => new SelectListItem
             {
@@ -26,6 +27,7 @@ namespace Veterinario3.Controllers
             }).ToList();
 
             ViewBag.CompanyOptions = companyOptions;
+            ViewBag.UsageOptions = new SelectList(usages, "Id", "Utilizzo");
 
             return View();
         }
