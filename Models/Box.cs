@@ -12,12 +12,10 @@ namespace Veterinario3.Models
         [Key]
         public int Id { get; set; }
         public string CodiceCassetto { get; set; }
+        public virtual Usage Usage { get; set; }
         public string CodiceProdotto { get; set; }
-
+        public virtual Product Product { get; set; }
         public int ContainerId { get; set; }
         public virtual Container Container { get; set; }
-
-
-
     }
 }
