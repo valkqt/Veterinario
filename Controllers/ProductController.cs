@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
@@ -12,57 +10,53 @@ namespace Veterinario3.Controllers
     {
         private VetContext db = new VetContext();
 
-
         public ActionResult Index()
         {
-            var companies = db.Companies.ToList();
+            var companies = db.Companies.Include(c => c.Product).ToList();
             return View(companies);
         }
 
         public ActionResult AddProduct()
         {
-            ViewBag.Companies = db.Companies.ToList();
+            var companies = db.Companies.ToList();
+            var usages = db.Usages.ToList();
+
+            var companyOptions = companies.Select(c => new SelectListItem
+            {
+                Text = c.Nome,
+                Value = c.id.ToString()
+            }).ToList();
+
+            ViewBag.CompanyOptions = companyOptions;
+            ViewBag.UsageOptions = new SelectList(usages, "Id", "Utilizzo");
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddProduct(Product product, string Tipo, int CompanyId)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddProduct(Product product, string Tipo)
         {
             if (ModelState.IsValid)
             {
-                if (CompanyId > 0)
+                if (!string.IsNullOrEmpty(Tipo))
                 {
-                    var company = db.Companies.Find(CompanyId);
-
-                    if (company != null)
-                    {
-                        product.Company = company;
-
-                        if (!string.IsNullOrEmpty(Tipo))
-                        {
-                            product.Tipologia = Tipo;
-                        }
-
-                        db.Products.Add(product);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "La compagnia selezionata non esiste.");
-                    }
+                    product.Tipologia = Tipo;
                 }
-                else
+
+                var selectedCompany = db.Companies.FirstOrDefault(c => c.id == product.SelectedCompanyId);
+                if (selectedCompany != null)
                 {
-                    ModelState.AddModelError("", "Seleziona una compagnia valida.");
+                    product.Company = selectedCompany;
                 }
+
+                db.Products.Add(product);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Companies = db.Companies.ToList();
             return View(product);
         }
-
-
 
         [HttpPost]
         public ActionResult IncreaseQuantity(int productId)
@@ -71,7 +65,6 @@ namespace Veterinario3.Controllers
             if (product != null)
             {
                 product.Quantità++;
-
                 db.SaveChanges();
             }
 

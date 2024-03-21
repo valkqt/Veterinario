@@ -6,6 +6,7 @@ using Veterinario3.Models;
 [AllowAnonymous]
 public class AnimalController : Controller
 {
+
     private readonly VetContext _db;
 
     public AnimalController()
