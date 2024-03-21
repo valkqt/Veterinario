@@ -29,5 +29,17 @@
         @Html.DropDownList("SelectedCompanyId", (IEnumerable<SelectListItem>)ViewBag.CompanyOptions, "Seleziona Compagnia")
     </div>
 
+    <div>
+        <p>Scegli l'utilizzo</p>
+        @Html.DropDownList("UsageId", (IEnumerable<SelectListItem>)ViewBag.UsageOptions, "Seleziona Utilizzo")
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Ricetta)
+        @Html.CheckBoxFor(model => model.Ricetta)
+    </div>
+
+
+
     <input type="submit" value="Aggiungi Prodotto" />
 }

@@ -21,10 +21,27 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Animals", "Animals", "Vet", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Products", "Index", "Product", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Search", "SearchAnimal", "Animal", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("veterinario"))
+                        {
+                            <li>@Html.ActionLink("Animals", "Animals", "Vet", null, new { @class = "nav-link" })</li>
+                        }
+                        else if (User.IsInRole("farmacista"))
+                        {
+                            <li>@Html.ActionLink("Products", "Index", "Product", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
+                        <li>
+                            @using (Html.BeginForm("Logout", "Home"))
+                            {@Html.AntiForgeryToken()<button class="btn btn-secondary">Logout</button>}
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Search", "SearchAnimal", "Animal", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn-secondary" })</li>
+                    }
                 </ul>
             </div>
         </div>
