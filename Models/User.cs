@@ -10,6 +10,12 @@ namespace Veterinario3.Models
     {
         [Key]
         public int id { get; set; }
+        [StringLength(50)]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Password { get; set; }
         [StringLength(255)]
         public string role { get; set; }
 

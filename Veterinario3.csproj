@@ -150,6 +150,7 @@
     <Compile Include="Models\Placement.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductsUsage.cs" />
+    <Compile Include="Models\RoleManager.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\Therapy.cs" />
     <Compile Include="Models\Usage.cs" />
@@ -221,6 +222,8 @@
 
     <Content Include="Views\Vet\Mensili.cshtml" />
 
+    <Content Include="Views\Home\Login.cshtml" />
+    
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

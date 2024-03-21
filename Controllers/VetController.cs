@@ -7,6 +7,7 @@ using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
 {
+    [Authorize(Roles = "veterinario")]
     public class VetController : Controller
     {
         // GET: Vet
