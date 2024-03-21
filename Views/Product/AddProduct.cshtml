@@ -18,8 +18,8 @@
 
 
     <div>
-        @Html.LabelFor(model => model.Quantit�)
-        @Html.EditorFor(model => model.Quantit�)
+        @Html.LabelFor(model => model.Quantità)
+        @Html.EditorFor(model => model.Quantità)
     </div>
 
     <div>
@@ -31,6 +31,13 @@
         <p>Scegli l'utilizzo</p>
         @Html.DropDownList("UsageId", (IEnumerable<SelectListItem>)ViewBag.UsageOptions, "Seleziona Utilizzo")
     </div>
+
+    <div>
+        @Html.LabelFor(model => model.Ricetta)
+        @Html.CheckBoxFor(model => model.Ricetta)
+    </div>
+
+
 
     <input type="submit" value="Aggiungi Prodotto" />
 }
