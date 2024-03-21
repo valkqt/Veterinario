@@ -7,7 +7,7 @@
         @foreach (var product in company.Product)
         {
             <li>
-                @product.Nome - Quantità @product.Quantità
+                @product.Nome - Box: @product.Quantità
                 @using (Html.BeginForm("IncreaseQuantity", "Product", new { productId = product.Id  }, FormMethod.Post))
                 {
                     <input type="submit" value="Ordina" />
