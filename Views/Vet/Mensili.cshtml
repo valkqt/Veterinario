@@ -3,22 +3,29 @@
 @model List<Admission>
 @{
     ViewBag.Title = "Mensili";
+    var options = ViewBag.options as List<SelectListItem>;
     List<Admission> list = new List<Admission>();
 }
 
 <h2>Mensili</h2>
-
-<table class="table">
+@if (TempData["id"] != null)
+            {
+    <p>@TempData["id"]</p>
+            }
+@Html.DropDownList("selectList", options, new { @class = "css-class", @id = "selectList" })
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Data Inizio Ricovero</th>
+            <th scope="col">Data Fine Ricovero</th>
             <th scope="col">Nome</th>
             <th scope="col">Tipologia</th>
             <th scope="col">Colore</th>
             <th scope="col">Data Registrazione Animale</th>
             <th scope="col">Data di Nascita</th>
             <th scope="col">#Microchip</th>
+            <th scope="col">Controlli</th>
 
         </tr>
     </thead>
@@ -29,26 +36,57 @@
 @section scripts {
     <script type="text/javascript">
         const table = document.getElementById("target")
+        const select = document.getElementById("selectList")
 
-        async function FetchMonthly() {
-            const response = await fetch('@Url.Action("Monthly", "Vet")')
+        async function FetchAdmissions(category) {
+            const response = await fetch(category)
             const data = await response.json();
             for (elem of data) {
                 const tr = document.createElement("tr")
                 table.appendChild(tr)
                 for (let [key, value] of Object.entries(elem)) {
-                    if (key == "DataReg" || key == "DataNascita" || key == "StartDate") {
-                        value = new Date(parseInt(value.substr(6))).toISOString().slice(0,10)
+                    if (key == "DataReg" || key == "DataNascita" || key == "StartDate" || key == "EndDate") {
+                        value = new Date(parseInt(value.substr(6))).toISOString().slice(0, 10)
+                        if (value === "0001-01-01") {
+                            value = "N/A"
+                        }
                     }
                     const td = document.createElement("td")
                     td.innerText = value
                     tr.appendChild(td)
+
                 }
+                const td = document.createElement("td")
+                const link = document.createElement("a")
+                link.innerText = "Go back"
+                tr.appendChild(td)
+                link.href = `/Vet/MarkAsEnded?id=${elem.admissionId}`
+                td.appendChild(link)
             }
+        
+
 
 
             return data
         }
-        FetchMonthly();
+        function PepeFunction() {
+
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            if (select.value === "1") {
+                return '@Url.Action("AllAdmissions", "Vet")'
+            } else if (select.value === "2") {
+                return '@Url.Action("Monthly", "Vet")'
+            } else {
+                return '@Url.Action("Active", "Vet")'
+            }
+
+        }
+
+        select.addEventListener("change", () => FetchAdmissions(PepeFunction()));
+        FetchAdmissions(PepeFunction())
+
 
     </script> }

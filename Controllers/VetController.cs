@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Veterinario3.Models;
 
 namespace Veterinario3.Controllers
@@ -92,18 +94,42 @@ namespace Veterinario3.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAnimal(AnimalsViewModel vm)
+        public ActionResult AddAnimal(AnimalsViewModel vm, HttpPostedFileBase FileFoto)
         {
-            Animal animal = vm.animal;
-            TempData["error"] = "pepe";
-            db.Animals.Add(animal);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                Animal animal = vm.animal;
+                animal.Foto = "sadsa";
+                if (FileFoto != null && FileFoto.ContentLength > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileFoto.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads"), fileName);
+                    FileFoto.SaveAs(path);
+                    animal.FileFoto = fileName;
+                    animal.Foto = fileName;
+                }
+                db.Animals.Add(animal);
+                db.SaveChanges();
+                TempData["success"] = "true";
+            }
+            else
+            {
+                TempData["error"] = "true";
+            }
+
+
 
             return RedirectToAction("Animals");
         }
 
         public ActionResult Mensili()
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "Tutti", Value = "1" });
+            items.Add(new SelectListItem { Text = "Mensili", Value = "2" });
+            items.Add(new SelectListItem { Text = "Attivi", Value = "3" });
+
+            ViewBag.options = items;
             return View();
         }
 
@@ -117,6 +143,7 @@ namespace Veterinario3.Controllers
                           {
                               admissionId = ad.id,
                               StartDate = ad.DataInizio,
+                              EndDate = ad.DataFine,
                               Nome = al.Name,
                               Tipologia = al.Tipologia,
                               Colore = al.Colore,
@@ -126,7 +153,61 @@ namespace Veterinario3.Controllers
                           }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public JsonResult AllAdmissions()
+        {
+            var result = (from ad in db.Admissions
+                          join al in db.Animals on ad.animalID equals al.id
+                          select new
+                          {
+                              admissionId = ad.id,
+                              StartDate = ad.DataInizio,
+                              EndDate = ad.DataFine,
+                              Nome = al.Name,
+                              Tipologia = al.Tipologia,
+                              Colore = al.Colore,
+                              DataReg = al.DataReg,
+                              DataNascita = al.DataNascita,
+                              Microchip = al.IdMicrochip,
+                          }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public JsonResult Active()
+        {
+            var min = DateTime.MinValue;
+            var result = (from ad in db.Admissions
+                          join al in db.Animals on ad.animalID equals al.id
+                          where (ad.DataFine > min)
+                          select new
+                          {
+                              admissionId = ad.id,
+                              StartDate = ad.DataInizio,
+                              EndDate = ad.DataFine,
+                              Nome = al.Name,
+                              Tipologia = al.Tipologia,
+                              Colore = al.Colore,
+                              DataReg = al.DataReg,
+                              DataNascita = al.DataNascita,
+                              Microchip = al.IdMicrochip,
+                          }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult MarkAsEnded(int id)
+        {
+            var admission = db.Admissions.Where(a => a.id == id).FirstOrDefault();
+            admission.DataFine = DateTime.Now;
+            db.Entry(admission).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Mensili", "Vet");
+        }
+
+
     }
 }

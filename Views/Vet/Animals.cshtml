@@ -4,27 +4,39 @@
 @{
     ViewBag.Title = "Animals";
     var animals = ViewBag.Animals as List<Animal>;
+    string error = (string)TempData["error"] ?? "false";
+    string success = (string)TempData["success"] ?? "false";
 
 }
 
 <h2>Animals</h2>
-@if (TempData["error"] != null)
+@if (error == "true")
 {
-    <p>@TempData["error"]</p>
+    <div id="errMsg" class="alert alert-warning" role="alert">
+        C'è stato un errore.
+    </div>
 }
 
+@if (success == "true")
+{
+    <div id="successMsg" class="alert alert-success" role="alert">
+        Inserimento effettuato con successo.
+    </div>
+}
+
+
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pepe">
-    Addsss
+    Aggiungi Animale
 </button>
 
-@using (Html.BeginForm("AddAnimal", "Vet", FormMethod.Post))
+@using (Html.BeginForm("AddAnimal", "Vet", FormMethod.Post, new { encType = "multipart/form-data" }))
 {
 
     <div class="modal fade" id="pepe">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Modal title</h1>
+                    <h1 class="modal-title fs-5">Aggiungi Animale</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -32,77 +44,61 @@
 
                     @Html.LabelFor(m => m.animal.Name, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.Name)
 
                     @Html.LabelFor(m => m.animal.Tipologia, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.Tipologia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.Tipologia)
+
 
                     @Html.LabelFor(m => m.animal.Colore, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.Colore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.Colore)
+
 
                     @Html.LabelFor(m => m.animal.DataNascita, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.DataNascita, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+                    @Html.ValidationMessageFor(m => m.animal.DataNascita)
+
 
                     @Html.LabelFor(m => m.animal.Presunta, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.CheckBoxFor(m => m.animal.Presunta, new { htmlAttributes = new { @class = "form-check" } })
+                    @Html.ValidationMessageFor(m => m.animal.Presunta)
+
 
                     @Html.LabelFor(m => m.animal.IdMicrochip, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.IdMicrochip, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.IdMicrochip)
+
 
                     @Html.LabelFor(m => m.animal.Foto, new { htmlAttributes = new { @class = "form-label" } })
-                    @Html.EditorFor(m => m.animal.Foto, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="file" name="FileFoto" accept="image/*" />
+                    @Html.ValidationMessageFor(m => m.animal.FileFoto)
+
+
 
                     <hr />
                     <h5>Informazioni Proprietario</h5>
 
                     @Html.LabelFor(m => m.animal.CognomeProprietario, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.CognomeProprietario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.CognomeProprietario)
+
 
                     @Html.LabelFor(m => m.animal.NomeProprietario, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.NomeProprietario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.animal.NomeProprietario)
+
 
                     @Html.LabelFor(m => m.animal.TelefonoProprietario, new { htmlAttributes = new { @class = "form-label" } })
                     @Html.EditorFor(m => m.animal.TelefonoProprietario, new { htmlAttributes = new { @class = "form-control" } })
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">aggiungi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@using (Html.BeginForm("Ricovero", "Vet", new { animalId = animals[0].id }, FormMethod.Post))
-{
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@("#Modal" + animals[0].id)">
-        Ricovero
-    </button>
-
-    @Html.AntiForgeryToken()
-
-    <!-- Modal -->
-    <div class="modal fade" id="@("Modal" + animals[0].id)">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    @Html.HiddenFor(m => m.admission.animalID)
-
-                    @Html.LabelFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
-                    @Html.EditorFor(m => m.admission.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
-
-                    @Html.LabelFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-label" } })
-                    @Html.EditorFor(m => m.admission.DataFine, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+                    @Html.ValidationMessageFor(m => m.animal.TelefonoProprietario)
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Conferma ricovero</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button type="submit" class="btn btn-primary">Conferma</button>
                 </div>
             </div>
         </div>
@@ -110,7 +106,7 @@
 }
 
 
-@Html.ActionLink("Monthly", "Mensili", "Vet")
+@Html.ActionLink("Monthly", "Mensili", "Vet", null, new { @class = "btn btn-primary" })
 
 <table class="table">
     <thead>
@@ -139,7 +135,7 @@
                 <td>@animals[i].Name</td>
                 <td>@animals[i].Tipologia</td>
                 <td>@animals[i].Colore</td>
-                <td><img style="width: 100px; height: 100px; object-fit: cover;" src="@animals[i].Foto" alt="@animals[i].Name" /></td>
+                <td><img style="width: 100px; height: 100px; object-fit: cover;" src="~/Uploads/@animals[i].Foto" alt="@animals[i].Name" /></td>
                 <td>@animals[i].DataReg.ToShortDateString()</td>
                 <td>@animals[i].DataNascita.ToShortDateString()</td>
                 <td>@animals[i].Presunta</td>
@@ -194,3 +190,14 @@
 
     </tbody>
 </table>
+
+@section scripts {
+    <script type="text/javascript">
+
+        const error = document.getElementById("errMsg")
+        const success = document.getElementById("successMsg")
+        window.setTimeout(() => { error.style.display = "none" }, 1000)
+        window.setTimeout(() => { success.style.display = "none" }, 1000)
+
+    </script>
+} 
