@@ -69,14 +69,18 @@
                                     <li>@Html.ActionLink("Aggiungi prodotto", "AddProduct", "Product")</li>
                                     <li>@Html.ActionLink("Aggiungi ditta", "AddCompany", "Company")</li>
                                     <li>@Html.ActionLink("Trova prodotto", "Index", "Container")</li>
-                                    
+
                                 </ul>
                             </li>
-                            <li class="nav-link">@Html.ActionLink("Nuova vendita", "Index", "Cart")</li>
+                                @Html.ActionLink("Nuova vendita", "Index", "Cart", null, new { @class = "nav-link"})
                             <li class="d-flex">
                                 @Html.ActionLink("Carrello", "Cart", "Cart", null, new { @class = "nav-link" })
-                                <img src="~/Content/Images/cart-outline.svg" alt="Logo" class="img-fluid" />
-                                <span class="cart-item-count">@Html.Raw(db.Carts.Count())</span>
+                                <div id="cartBox">
+
+                                    <img src="~/Content/Images/cart-outline.svg" alt="Logo" class="img-fluid CartSvg" />
+                                    <div id="cartNumber"><span class="cart-item-count">@Html.Raw(db.Carts.Count())</span></div>
+
+                                </div>
                             </li>
                         }
                     }
@@ -105,7 +109,7 @@
     </nav>
     <div class="body-content">
         @RenderBody()
-        <footer>
+        <footer class="text-center" style="font-size: 1.5rem; margin-top: 1rem;">
             <p>&copy; @DateTime.Now.Year - <b>TheVetClinic</b></p>
         </footer>
     </div>

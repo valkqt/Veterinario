@@ -13,6 +13,7 @@ namespace Veterinario3.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Tipologia { get; set; }
+        [Range(0, int.MaxValue)]
         public int Quantità { get; set; }
 
         [ForeignKey("Company")]

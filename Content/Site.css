@@ -9,13 +9,11 @@ body {
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
     width: 100%;
     text-align: center;
 }
 
-.cardAnimale{
+.cardAnimale {
     border: 4px solid #198754;
 }
 
@@ -43,7 +41,7 @@ footer {
         color: #f0f0f0;
     }
 
-.formProduct{
+.formProduct {
     width: 220px;
     color: #198754;
     border-color: #198754;
@@ -82,10 +80,11 @@ footer {
     align-items: center;
 }
 
-#searchForm button {
-    width: 150px;
-    margin-bottom: 1rem;
-}
+    #searchForm button {
+        width: 150px;
+        margin-bottom: 1rem;
+    }
+
 #microchipNumber {
     height: 2.5rem;
     width: 35%;
@@ -284,13 +283,12 @@ textarea {
     color: var(--primary);
     padding: 0.66rem 0 0.33rem 0;
     text-transform: uppercase;
-    display:inline-block;
+    display: inline-block;
 }
 
 .HomeTestimonials {
     background-color: var(--primary);
     padding: 6rem 6rem;
-
 }
 
 .HomeTestimonialsText {
@@ -306,10 +304,10 @@ textarea {
     flex-direction: column;
 }
 
-.HomeForm * {
-    width: 60%;
-    margin: 0 auto;
-}
+    .HomeForm * {
+        width: 60%;
+        margin: 0 auto;
+    }
 
 textarea {
     height: 170px;
@@ -324,4 +322,78 @@ input[type=email] {
     border-bottom: 1px solid var(--primary);
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
+}
+
+.CartSvg {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    background-color: #FCFCED;
+    border-radius: 50%;
+}
+
+.cart-item-count {
+    background-color: #89B32C;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: -6px;
+}
+
+
+
+#cartBox {
+    position:relative;
+}
+
+.ContainerBox {
+    width: 50%;
+    margin: 0 auto;
+    display:flex;
+    gap: 1rem;
+    flex-direction: column;
+
+}
+
+.ContainerBox input {
+    width: 50%;
+    margin: 0 auto;
+}
+
+    .ContainerBox input:focus {
+        box-shadow: 0;
+        outline: 1px solid var(--primary)
+    }
+
+
+.ContainerBox button {
+    width: 220px;
+    background-color: var(--primary);
+    padding: 8px;
+    margin: 0 auto;
+    color: white;
+    border: 0;
+}
+
+    .ContainerBox button:hover {
+        background-color: #89B32C;
+    }
+    #salesForSelectedDate {
+        display:flex;
+        flex-direction: column;
+    }
+
+    #salesForSelectedDate li{
+        display:inline-block;
+        
+    }
+
+input:focus {
+    box-shadow: 1px 1px 1px var(--primary) !important;
+    outline: 1px solid var(--primary) !important ;
 }
