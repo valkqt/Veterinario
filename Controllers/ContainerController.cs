@@ -16,8 +16,19 @@ namespace Veterinario3.Controllers
 
         public ActionResult Index()
         {
-            var containers = _context.Containers.ToList();
-            return View(containers);
+            return View();
+        }
+
+        public ActionResult PosizioneFarmaci()
+        {
+            return View();
+        }
+
+
+        public JsonResult AllProductsJson()
+        {
+            var products = _context.Products.ToList();
+            return Json(products);
         }
     }
 }

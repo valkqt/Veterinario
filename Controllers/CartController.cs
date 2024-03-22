@@ -14,6 +14,7 @@ namespace Veterinario3.Controllers
         {
             var products = db.Products.AsQueryable();
 
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 products = products.Where(p => p.Nome.Contains(searchString));
@@ -41,7 +42,6 @@ namespace Veterinario3.Controllers
             return RedirectToAction("Index", "Cart");
         }
 
-       
 
         public ActionResult Cart()
         {

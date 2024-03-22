@@ -22,6 +22,9 @@
         <th>
             @Html.DisplayNameFor(model => model[0].Quantità)
         </th>
+        <th>
+            Codice del Box
+        </th>
         <th></th>
     </tr>
 
@@ -35,6 +38,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quantità)
             </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipologia)
+            </td>
+
             <td>
                 @using (Html.BeginForm("AddToCart", "Cart"))
                 {

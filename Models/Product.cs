@@ -23,5 +23,7 @@ namespace Veterinario3.Models
         public virtual Usage Usage { get; set; }
 
         public bool Ricetta { get; set; } = false;
+
+
     }
 }
