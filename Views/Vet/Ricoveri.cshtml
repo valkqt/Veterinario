@@ -1,0 +1,156 @@
+﻿@using Veterinario3.Models
+
+@model List<Admission>
+@{
+    ViewBag.Title = "Ricoveri";
+    var options = ViewBag.options as List<SelectListItem>;
+    List<Admission> list = new List<Admission>();
+    string error = (string)TempData["error"] ?? "false";
+    string success = (string)TempData["success"] ?? "false";
+    string terminato = (string)TempData["terminato"] ?? "false";
+
+}
+
+<h2 class="text-center CustomHeader">Ricoveri</h2>
+@if (error == "true")
+{
+    <div id="errMsg" class="alert alert-warning CustomAlert AlertWarning" role="alert">
+        C'è stato un errore.
+    </div>
+}
+
+@if (terminato == "true")
+{
+    <div id="endedMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
+        Ricovero terminato in data odierna.
+    </div>
+}
+
+
+@if (success == "true")
+{
+    <div id="successMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
+        Modifica effettuata con successo.
+    </div>
+}
+@Html.DropDownList("selectList", options, new { @class = "css-class d-block CustomSelect", @id = "selectList" })
+<table class="table mt-3 AnimalsTable">
+    <thead>
+        <tr class="table-success">
+            <th scope="col">#</th>
+            <th scope="col">Data Inizio</th>
+            <th scope="col">Data Fine</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tipologia</th>
+            <th scope="col">Colore</th>
+            <th scope="col" title="Data Registrazione Animals">Data Reg.</th>
+            <th scope="col">Data Nascita</th>
+            <th scope="col">#Microchip</th>
+            <th scope="col">Controlli</th>
+
+        </tr>
+    </thead>
+    <tbody id="target">
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+        const table = document.getElementById("target")
+        const select = document.getElementById("selectList")
+
+        async function FetchAdmissions(category) {
+            const response = await fetch(category)
+            const data = await response.json();
+            for (elem of data) {
+                const tr = document.createElement("tr")
+                table.appendChild(tr)
+                for (let [key, value] of Object.entries(elem)) {
+                    if (key.includes("Data") && value !== null) {
+                        value = new Date(parseInt((value).substr(6)) + 86400000).toISOString().slice(0, 10)
+
+
+                    } else if (value === null) {
+                        value = "N/A"
+                    } else {
+
+                    }
+                    const td = document.createElement("td")
+                    td.innerText = value
+                    tr.appendChild(td)
+
+                }
+                const td = document.createElement("td")
+                td.setAttribute("id", "AdmissionsControls")
+                const link = document.createElement("a")
+                link.innerText = "Termina"
+                link.classList.add("CustomButton")
+                link.href = `/Vet/MarkAsEnded?id=${elem.admissionId}`
+                if (elem.DataFine !== null) {
+                    link.href = ""
+                    link.classList.add("CustomDisabled")
+                }
+                const link2 = document.createElement("a")
+                link2.innerText = "Modifica"
+                link2.classList.add("CustomButton")
+                link2.href = `/Vet/EditAdmission?id=${elem.admissionId}`
+
+
+                tr.appendChild(td)
+                td.appendChild(link)
+                td.appendChild(link2)
+
+            }
+
+
+
+
+            return data
+        }
+        function PepeFunction() {
+
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            if (select.value === "1") {
+                return '@Url.Action("AllAdmissions", "Vet")'
+            } else if (select.value === "2") {
+                return '@Url.Action("Monthly", "Vet")'
+            } else {
+                return '@Url.Action("Active", "Vet")'
+            }
+
+        }
+
+        select.addEventListener("change", () => FetchAdmissions(PepeFunction()));
+        FetchAdmissions(PepeFunction())
+
+        const error = document.getElementById("errMsg")
+        const success = document.getElementById("successMsg")
+        const terminato = document.getElementById("endedMsg")
+
+        if (error) {
+            window.setTimeout(() => {
+                error.style.display = "none";
+            }, 1500)
+
+        }
+
+        if (success) {
+            window.setTimeout(() => {
+                success.style.display = "none";
+            }, 1500)
+
+        }
+
+        if (terminato) {
+            window.setTimeout(() => {
+                terminato.style.display = "none";
+            }, 1500)
+
+        }
+
+
+
+    </script> }
