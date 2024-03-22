@@ -1,0 +1,19 @@
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Products.Nome</td>
+        <td>
+            @using (Html.BeginForm("RemoveFromCart", "Cart"))
+            {
+                <input type="hidden" name="id" value="@item.Id" />
+                <input type="submit" value="Rimuovi dal carrello" />
+            }
+        </td>
+    </tr>
+}
+
+<tr>
+    <td colspan="2">
+        @Html.ActionLink("Procedi con l'ordine", "ProceedToSale", "Cart", null, new { @class = "btn btn-primary" })
+    </td>
+</tr>
