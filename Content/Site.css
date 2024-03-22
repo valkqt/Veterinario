@@ -15,12 +15,39 @@ body {
 }
 
 
-.titoloPagina{
+.titoloPagina {
     font-size: 30px;
     font-weight: 400;
     color: #000000;
     text-align: center;
+    padding-bottom: 1rem;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--primary)
 }
+
+#searchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#searchForm button {
+    width: 150px;
+    margin-bottom: 1rem;
+}
+#microchipNumber {
+    height: 2.5rem;
+    width: 35%;
+    background-color: #FCFCED;
+    margin-bottom: 1rem;
+}
+
+    #microchipNumber:focus {
+        outline: 1px solid var(--primaryLight);
+        box-shadow: 2px 1px 1px var(--primary);
+    }
 /* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
@@ -36,14 +63,14 @@ body {
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 :root {
-    --primary: #009E93;
+    --primary: #198754;
     --yellow: #F0CF50;
     --primaryLight: #009e5a;
 }
@@ -133,6 +160,7 @@ textarea {
     text-decoration: none;
     color: white;
 }
+
     .CustomButton:hover {
         background-color: #009e5a;
         color: white;
@@ -175,7 +203,7 @@ textarea {
     max-width: 180px;
 }
 
-#AdmissionsControls * {
-    display: inline-block;
-    margin-left: 8px;
-}
+    #AdmissionsControls * {
+        display: inline-block;
+        margin-left: 8px;
+    }
