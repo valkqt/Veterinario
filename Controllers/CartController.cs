@@ -114,5 +114,11 @@ namespace Veterinario3.Controllers
             return RedirectToAction("Index"); 
         }
 
+        public ActionResult AllSalesJson()
+        {
+            var sales = db.Sales.ToList();
+            return Json(sales, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

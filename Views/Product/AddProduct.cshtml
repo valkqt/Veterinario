@@ -1,10 +1,10 @@
 ﻿@model Veterinario3.Models.Product
 @Styles.Render("~/Content/css")
 
-@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
+<main class="container">
+    @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
     <h2 class="titoloPagina fw-bold">AGGIUNGI PRODOTTO</h2>
     <div class="d-flex flex-column align-items-center">
 
@@ -51,4 +51,5 @@
 
         <input type="submit" value="Aggiungi Prodotto" class="btn btn-success" />
     </div>
-}
+}        
+</main>

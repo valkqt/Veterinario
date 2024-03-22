@@ -178,6 +178,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\cart-outline.svg" />
     <Content Include="Content\Images\image1.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

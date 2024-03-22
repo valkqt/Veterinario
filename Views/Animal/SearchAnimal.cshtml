@@ -3,15 +3,16 @@
 @{
     ViewData["Title"] = "Cerca il tuo animale";
 }
+<main class="container mt-3">
+    <h2 class="fw-bold titoloPagina">INSERISCI IL NUMERO DEL MICROCHIP</h2>
 
-<h2 class="fw-bold titoloPagina">INSERISCI IL NUMERO DEL MICROCHIP</h2>
+    <form id="searchForm">
+        <input type="text" id="microchipNumber" name="microchipNumber" value="@Model" />
+        <button type="submit" class="btn btn-outline-success">Cerca</button>
+    </form>
 
-<form id="searchForm">
-    <input type="text" id="microchipNumber" name="microchipNumber" value="@Model" />
-    <button type="submit" class="btn btn-outline-success">Cerca</button>
-</form>
-
-<div id="animalDetails"></div>
+    <div id="animalDetails"></div>
+</main>
 
 @section Scripts {
     <script>
