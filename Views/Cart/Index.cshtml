@@ -1,4 +1,4 @@
-@model List<Veterinario3.Models.Product>
+Ôªø@model List<Veterinario3.Models.Product>
 
 @{
     ViewBag.Title = "Ordinazione";
@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model[0].Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].Quantit‡)
+            @Html.DisplayNameFor(model => model[0].Quantit√†)
         </th>
         <th></th>
     </tr>
@@ -33,7 +33,7 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Quantit‡)
+                @Html.DisplayFor(modelItem => item.Quantit√†)
             </td>
             <td>
                 @using (Html.BeginForm("AddToCart", "Cart"))

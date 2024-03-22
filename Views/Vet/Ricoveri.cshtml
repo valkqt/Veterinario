@@ -10,50 +10,50 @@
     string terminato = (string)TempData["terminato"] ?? "false";
 
 }
+<main class="container mt-3">
+    <h2 class="text-center CustomHeader">Ricoveri</h2>
+    @if (error == "true")
+    {
+        <div id="errMsg" class="alert alert-warning CustomAlert AlertWarning" role="alert">
+            C'è stato un errore.
+        </div>
+    }
 
-<h2 class="text-center CustomHeader">Ricoveri</h2>
-@if (error == "true")
-{
-    <div id="errMsg" class="alert alert-warning CustomAlert AlertWarning" role="alert">
-        C'è stato un errore.
-    </div>
-}
-
-@if (terminato == "true")
-{
-    <div id="endedMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
-        Ricovero terminato in data odierna.
-    </div>
-}
+    @if (terminato == "true")
+    {
+        <div id="endedMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
+            Ricovero terminato in data odierna.
+        </div>
+    }
 
 
-@if (success == "true")
-{
-    <div id="successMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
-        Modifica effettuata con successo.
-    </div>
-}
-@Html.DropDownList("selectList", options, new { @class = "css-class d-block CustomSelect", @id = "selectList" })
-<table class="table mt-3 AnimalsTable">
-    <thead>
-        <tr class="table-success">
-            <th scope="col">#</th>
-            <th scope="col">Data Inizio</th>
-            <th scope="col">Data Fine</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Tipologia</th>
-            <th scope="col">Colore</th>
-            <th scope="col" title="Data Registrazione Animals">Data Reg.</th>
-            <th scope="col">Data Nascita</th>
-            <th scope="col">#Microchip</th>
-            <th scope="col">Controlli</th>
+    @if (success == "true")
+    {
+        <div id="successMsg" class="alert alert-success CustomAlert AlertSuccess" role="alert">
+            Modifica effettuata con successo.
+        </div>
+    }
+    @Html.DropDownList("selectList", options, new { @class = "css-class d-block CustomSelect", @id = "selectList" })
+    <table class="table mt-3 AnimalsTable">
+        <thead>
+            <tr class="table-success">
+                <th scope="col">#</th>
+                <th scope="col">Data Inizio</th>
+                <th scope="col">Data Fine</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Tipologia</th>
+                <th scope="col">Colore</th>
+                <th scope="col" title="Data Registrazione Animals">Data Reg.</th>
+                <th scope="col">Data Nascita</th>
+                <th scope="col">#Microchip</th>
+                <th scope="col">Controlli</th>
 
-        </tr>
-    </thead>
-    <tbody id="target">
-    </tbody>
-</table>
-
+            </tr>
+        </thead>
+        <tbody id="target">
+        </tbody>
+    </table>
+</main>
 @section scripts {
     <script type="text/javascript">
         const table = document.getElementById("target")

@@ -3,10 +3,38 @@
 @{
     ViewBag.Title = "EditAdmission";
 }
+<main class="container mt-3">
 
     <h2 class="text-center CustomHeader">Modifica Dati Ricovero</h2>
 
-    @using (Html.BeginForm("EditAdmission", "Vet", FormMethod.Post, new {@class = "EditAdmissionContainer"}))
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-body d-flex flex-column align-items-center">
+
+                    @using (Html.BeginForm("EditAdmission", "Vet", FormMethod.Post, new { @class = "EditAdmissionContainer" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(m => m.id, new { @Value = $"{Model.id}" })
+                        @Html.HiddenFor(m => m.animalID, new { @Value = $"{Model.animalID}" })
+
+                        @Html.LabelFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
+                        @Html.EditorFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+
+                        @Html.LabelFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-label" } })
+                        @Html.EditorFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-control" } })
+
+                        <button type="submit" class="CustomButton">Conferma</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@*@using (Html.BeginForm("EditAdmission", "Vet", FormMethod.Post, new { @class = "EditAdmissionContainer" }))
     {
         @Html.HiddenFor(m => m.id, new { @Value = $"{Model.id}" })
         @Html.HiddenFor(m => m.animalID, new { @Value = $"{Model.animalID}" })
@@ -19,5 +47,5 @@
 
 
         <button type="submit" class="CustomButton">Conferma</button>
-    }
+    }*@
 

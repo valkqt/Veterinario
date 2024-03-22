@@ -1,45 +1,47 @@
 ﻿@model Veterinario3.Models.Product
 
-@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+<main class="container">
+    @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
 
-   <h2 class="titoloPagina fw-bold">AGGIUNGI PRODOTTO</h2>
+        <h2 class="titoloPagina fw-bold">AGGIUNGI PRODOTTO</h2>
 
-    <div>
-        @Html.LabelFor(model => model.Nome)
-        @Html.EditorFor(model => model.Nome)
-    </div>
-
-
-    <div>
-        <p>Tipologia:</p>
-        @Html.RadioButton("Tipo", "Farmaci")<label>Farmaci</label>
-        @Html.RadioButton("Tipo", "Alimentazione")<label>Alimentazione</label>
-    </div>
+        <div>
+            @Html.LabelFor(model => model.Nome)
+            @Html.EditorFor(model => model.Nome)
+        </div>
 
 
-    <div>
-        @Html.LabelFor(model => model.Quantità)
-        @Html.EditorFor(model => model.Quantità)
-    </div>
-
-    <div>
-        <p>Scegli la ditta fornitrice</p>
-        @Html.DropDownList("SelectedCompanyId", (IEnumerable<SelectListItem>)ViewBag.CompanyOptions, "Seleziona Compagnia")
-    </div>
-
-    <div>
-        <p>Scegli l'utilizzo</p>
-        @Html.DropDownList("UsageId", (IEnumerable<SelectListItem>)ViewBag.UsageOptions, "Seleziona Utilizzo")
-    </div>
-
-    <div>
-        @Html.LabelFor(model => model.Ricetta)
-        @Html.CheckBoxFor(model => model.Ricetta)
-    </div>
+        <div>
+            <p>Tipologia:</p>
+            @Html.RadioButton("Tipo", "Farmaci")<label>Farmaci</label>
+            @Html.RadioButton("Tipo", "Alimentazione")<label>Alimentazione</label>
+        </div>
 
 
+        <div>
+            @Html.LabelFor(model => model.Quantità)
+            @Html.EditorFor(model => model.Quantità)
+        </div>
 
-    <input type="submit" value="Aggiungi Prodotto" />
-}
+        <div>
+            <p>Scegli la ditta fornitrice</p>
+            @Html.DropDownList("SelectedCompanyId", (IEnumerable<SelectListItem>)ViewBag.CompanyOptions, "Seleziona Compagnia")
+        </div>
+
+        <div>
+            <p>Scegli l'utilizzo</p>
+            @Html.DropDownList("UsageId", (IEnumerable<SelectListItem>)ViewBag.UsageOptions, "Seleziona Utilizzo")
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Ricetta)
+            @Html.CheckBoxFor(model => model.Ricetta)
+        </div>
+
+
+
+        <input type="submit" value="Aggiungi Prodotto" />
+    }
+</main>
