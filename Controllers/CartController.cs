@@ -120,5 +120,9 @@ namespace Veterinario3.Controllers
             return Json(sales, JsonRequestBehavior.AllowGet);
         }
 
+        public int CountCartItems()
+        {
+            return db.Carts.Count();
+        }
     }
 }
