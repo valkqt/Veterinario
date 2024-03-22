@@ -1,14 +1,120 @@
 @model List<Veterinario3.Models.Container>
 
-<h2>Elenco Armadi e Box</h2>
+<h1>Elenco Armadi e Box</h1>
 
-@foreach (var container in Model)
-{
-    <h3>@container.CodiceArmadietto</h3>
-    <ul>
-        @foreach (var box in container.Boxes)
-        {
-            <li>@box.CodiceCassetto</li>
+
+<h2>Visualizzazione Vendite</h2>
+
+<input type="text" id="codiceFiscaleInput" placeholder="Inserisci il codice fiscale">
+<button onclick="searchSalesByCodiceFiscale()">Cerca per Codice Fiscale</button>
+
+<ul id="searchResults"></ul>
+
+<p id="noResultsMessage" style="display: none;">Nessun prodotto trovato per il codice fiscale inserito.</p>
+
+<p id="emptyCodiceFiscaleMessage" style="display: none;">Inserisci un codice fiscale.</p>
+
+<input type="date" id="selectedDate" onchange="searchSalesByDate()">
+<label for="selectedDate">Seleziona una data:</label>
+
+<ul id="salesForSelectedDate"></ul>
+
+<script>
+    async function fetchSalesData() {
+        try {
+            const response = await fetch('/Cart/AllSalesJson');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Errore durante il recupero dei dati delle vendite:', error);
+            return [];
         }
-    </ul>
-}
+    }
+
+    async function searchSalesByCodiceFiscale() {
+        const codiceFiscale = document.getElementById('codiceFiscaleInput').value;
+        const salesData = await fetchSalesData();
+        const productCounts = {};
+        const searchResultsList = document.getElementById('searchResults');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const emptyCodiceFiscaleMessage = document.getElementById('emptyCodiceFiscaleMessage');
+        searchResultsList.innerHTML = '';
+        noResultsMessage.style.display = 'none';
+        emptyCodiceFiscaleMessage.style.display = 'none';
+
+        if (!codiceFiscale || codiceFiscale.trim() === '') {
+            emptyCodiceFiscaleMessage.style.display = 'block';
+            console.error('Inserire un codice fiscale valido');
+            return;
+        }
+
+        const searchResults = salesData.filter(sale => sale.CodiceFiscale === codiceFiscale);
+
+        if (searchResults.length === 0) {
+            noResultsMessage.style.display = 'block';
+            console.log('Nessuna vendita trovata per il codice fiscale inserito');
+        } else {
+            console.log('Vendite trovate per il codice fiscale inserito:', searchResults);
+            searchResults.forEach(sale => {
+                const productName = sale.Products.Nome;
+                if (!productCounts[productName]) {
+                    productCounts[productName] = {};
+                }
+                const saleDate = formatDateFromTimestamp(sale.DataVendita);
+                productCounts[productName][saleDate] = (productCounts[productName][saleDate] || 0) + sale.Quantità;
+            });
+
+            for (const productName in productCounts) {
+                for (const saleDate in productCounts[productName]) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${productName} x${productCounts[productName][saleDate]} (${saleDate})`;
+                    searchResultsList.appendChild(listItem);
+                }
+            }
+        }
+    }
+
+    async function searchSalesByDate() {
+        const selectedDate = document.getElementById('selectedDate').value;
+        const salesData = await fetchSalesData();
+        const productCounts = {};
+        salesData.forEach(sale => {
+            const productName = sale.Products.Nome;
+            const saleDate = formatDateFromTimestamp(sale.DataVendita);
+            if (!productCounts[productName]) {
+                productCounts[productName] = {};
+            }
+            if (formatDateFromTimestamp(sale.DataVendita) === selectedDate) {
+                productCounts[productName][saleDate] = (productCounts[productName][saleDate] || 0) + sale.Quantità;
+            }
+        });
+
+        const salesForSelectedDateElement = document.getElementById('salesForSelectedDate');
+        salesForSelectedDateElement.innerHTML = '';
+
+        let hasSales = false;
+        for (const productName in productCounts) {
+            if (productCounts[productName][selectedDate]) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${productName} x${productCounts[productName][selectedDate]}`;
+                salesForSelectedDateElement.appendChild(listItem);
+                hasSales = true;
+            }
+        }
+
+        if (!hasSales) {
+            const noSalesMessage = document.createElement('p');
+            noSalesMessage.textContent = 'Non è stata effettuata nessuna vendita in questa data.';
+            salesForSelectedDateElement.appendChild(noSalesMessage);
+        }
+    }
+
+    function formatDateFromTimestamp(timestamp) {
+        const milliseconds = parseInt(timestamp.replace("/Date(", "").replace(")/", ""));
+        const date = new Date(milliseconds);
+        const formattedDate = date.toISOString().split('T')[0];
+        return formattedDate;
+    }
+
+    fetchSalesData();
+</script>
