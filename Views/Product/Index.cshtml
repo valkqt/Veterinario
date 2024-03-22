@@ -1,21 +1,25 @@
 ﻿@model List<Veterinario3.Models.Company>
+@Styles.Render("~/Content/css")
 
 @foreach (var company in Model)
 {
-    <h3 class="titoloPagina fw-bold">@company.Nome</h3>
-    <ul>
-        @foreach (var product in company.Product)
-        {
-            <li>
-
-             
-                @product.Nome - Box: @product.Quantità
-
-                @using (Html.BeginForm("IncreaseQuantity", "Product", new { productId = product.Id  }, FormMethod.Post))
-                {
-                    <input type="submit" value="Ordina" />
-                }
-            </li>
-        }
-    </ul>
+    <div>
+        <h3 class="titoloPagina fw-bold">@company.Nome</h3>
+        <div class="row row-cols-3">
+            @foreach (var product in company.Product)
+            {
+                <div class="col-4 mb-3">
+                    <div class="card cardProduct">
+                        <div class="card-body card-bodyProduct">
+                            <p class="card-text fw-bold">@product.Nome - Box: @product.Quantità</p>
+                            @using (Html.BeginForm("IncreaseQuantity", "Product", new { productId = product.Id }, FormMethod.Post))
+                            {
+                                <input type="submit" value="Ordina" class="btn btn-success" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 }

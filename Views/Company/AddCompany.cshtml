@@ -1,20 +1,23 @@
 @model Veterinario3.Models.Company
+@Styles.Render("~/Content/css")
 
 <h2 class="titoloPagina fw-bold">Aggiungi azienda alla lista fornitori:</h2>
 
 @using (Html.BeginForm("AddCompany", "Company", FormMethod.Post))
 {
-    @Html.LabelFor(model => model.Nome)
-    @Html.EditorFor(model => model.Nome)
-
-
-    @Html.LabelFor(model => model.Indirizzo)
-    @Html.EditorFor(model => model.Indirizzo)
-
-
-    @Html.LabelFor(model => model.Recapito)
-    @Html.EditorFor(model => model.Recapito)
-
-
-    <input type="submit" value="Aggiungi Azienda" />
+    <div class="d-flex flex-column align-items-center">
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label fw-bold" })
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control formProduct" } })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Indirizzo, new { @class = "control-label fw-bold" })
+            @Html.EditorFor(model => model.Indirizzo, new { htmlAttributes = new { @class = "form-control formProduct" } })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Recapito, new { @class = "control-label fw-bold" })
+            @Html.EditorFor(model => model.Recapito, new { htmlAttributes = new { @class = "form-control formProduct" } })
+        </div>
+        <input type="submit" value="Aggiungi Azienda" class="btn btn-success mt-3" />
+    </div>
 }

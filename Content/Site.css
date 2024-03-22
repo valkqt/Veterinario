@@ -8,9 +8,14 @@ body {
     background-color: #fcfced
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
 
-
-.cardAnimale {
+.cardAnimale{
     border: 4px solid #198754;
 }
 
@@ -27,6 +32,38 @@ body {
         background-color: #fcfced;
     }
 
+.btnLogin {
+    background-color: #4682b4;
+    color: #f0f0f0;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btnLogin:hover {
+        background-color: #3c6e98;
+        color: #f0f0f0;
+    }
+
+.formProduct{
+    width: 220px;
+    color: #198754;
+    border-color: #198754;
+}
+
+.cardProduct {
+    max-width: 300px;
+    margin: 0 auto;
+    border-color: #198754;
+    background-color: #d0f5e36e;
+}
+
+.card-bodyProduct {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .titoloPagina {
     font-size: 30px;
     font-weight: 400;
@@ -35,7 +72,7 @@ body {
     padding-bottom: 1rem;
     width: 70%;
     margin: 0 auto;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--primary)
 }
 

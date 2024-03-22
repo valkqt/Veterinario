@@ -14,6 +14,7 @@
             right: -55px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-color: #28a745;
             z-index: 1;
         }
         .dropdown:hover .dropdown-menu {
@@ -62,17 +63,25 @@
                                 </ul>
                             </li>
                         }
-                        <li>
-                            @using (Html.BeginForm("Logout", "Home"))
-                            {@Html.AntiForgeryToken()<button class="btn btn-secondary">Logout</button>}
-                        </li>
                     }
                     else
                     {
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Search", "SearchAnimal", "Animal", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btn-secondary" })</li>
-                   
+                        
+                    }
+                </ul>
+                <ul class="navbar-nav flex-grow-1 d-flex flex-column align-items-end">
+                    @if (User.Identity.IsAuthenticated) 
+                    {
+                        <li>
+                            @using (Html.BeginForm("Logout", "Home"))
+                            {@Html.AntiForgeryToken()<button class="btn btnLogin">Logout</button>}
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "btn btnLogin" })</li>
                     }
                 </ul>
             </div>
