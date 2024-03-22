@@ -1,4 +1,5 @@
 ﻿@model Veterinario3.Models.User
+@Styles.Render("~/Content/css")
 @{
     ViewBag.Title = "Login";
 }
@@ -6,7 +7,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card cardLogin">
                 <div class="card-body d-flex flex-column align-items-center">
                     <h2 class="card-title text-center mb-3">Login</h2>
 
@@ -23,17 +24,17 @@
 
                         <div class="form-group mb-3">
                             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label fw-bold" })
-                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control border-success inputLogin" } })
                             @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
                             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label fw-bold" })
-                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control border-success inputLogin" })
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Accedi</button>
+                        <button type="submit" class="btn btn-success">Accedi</button>
                     }
                 </div>
             </div>

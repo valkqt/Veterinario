@@ -22,20 +22,20 @@
                 <input type="hidden" id="AnimalId" name="AnimalId" value="@Model.Animal.id" />
                 <div class="form-group mb-3">
                     <label for="DataCura" class="control-label fw-bold">Data Cura</label>
-                    <input type="date" id="DataCura" name="DataCura" class="form-control" />
+                    <input type="date" id="DataCura" name="DataCura" class="form-control border-success" />
                     @Html.ValidationMessage("DataCura", "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group mb-3">
                     <label for="Diagnosi" class="control-label fw-bold">Diagnosi</label>
-                    <input type="text" id="Diagnosi" name="Diagnosi" class="form-control" />
+                    <input type="text" id="Diagnosi" name="Diagnosi" class="form-control border-success" />
                     @Html.ValidationMessage("Diagnosi", "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group mb-3">
                     <label for="DescrizioneCura" class="control-label fw-bold">Descrizione Cura</label>
-                    <input type="text" id="DescrizioneCura" name="DescrizioneCura" class="form-control" />
+                    <input type="text" id="DescrizioneCura" name="DescrizioneCura" class="form-control border-success" />
                     @Html.ValidationMessage("DescrizioneCura", "", new { @class = "text-danger" })
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Salva</button>
+                <button type="submit" class="btn btn-success btn-block">Salva</button>
             </form>
         </div>
     </div>
@@ -43,9 +43,10 @@
 
     <div class="row mt-5">
         <div class="col-md-12">
+            <h3 class="text-center">Cronistoria delle Visite:</h3>
             @if (Model.Therapies.Any())
             {
-                <h3 class="text-center">Cronistoria delle Visite:</h3>
+
 
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -79,7 +80,7 @@
 
     <div class="row mt-5">
         <div class="col-md-12">
-            <p>@Html.ActionLink("Torna indietro", "Animals", "Vet")</p>
+            <p>@Html.ActionLink("Torna indietro", "Animals", "Vet", new { @class = "text-success"})</p>
         </div>
     </div>
 </div>
