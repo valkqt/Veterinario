@@ -1,0 +1,14 @@
+@model List<Veterinario3.Models.Container>
+
+<h2>Elenco Armadi e Box</h2>
+
+@foreach (var container in Model)
+{
+    <h3>@container.CodiceArmadietto</h3>
+    <ul>
+        @foreach (var box in container.Boxes)
+        {
+            <li>@box.CodiceCassetto</li>
+        }
+    </ul>
+}
