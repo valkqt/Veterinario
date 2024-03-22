@@ -3,46 +3,55 @@
 @{
     ViewBag.Title = "Ordinazione";
 }
+<main class="container mt-3">
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-8">
+            <div class="text-center">
+                <h2>Ordina</h2>
+                <p>
+                    @using (Html.BeginForm("Index", "Cart", FormMethod.Get, new { @class = "form-inline" }))
+                    {
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchString" placeholder="Cerca prodotto per nome">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit">Cerca</button>
+                            </div>
+                        </div>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
 
-<h2>Ordina</h2>
-
-<p>
-    @using (Html.BeginForm("Index", "Cart", FormMethod.Get))
-    {
-        <input type="text" name="searchString" placeholder="Cerca prodotto per nome" />
-        <input type="submit" value="Search" />
-    }
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model[0].Quantità)
-        </th>
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantità)
-            </td>
-
-            <td>
-                @using (Html.BeginForm("AddToCart", "Cart"))
-                {
-                    @Html.Hidden("id", item.Id)
-                    <input type="submit" value="Aggiungi al carrello" />
-                }
-            </td>
-        </tr>
-    }
-</table>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Quantità</th>
+                        <th scope="col">Codice del Box</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Quantità)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Tipologia)</td>
+                            <td>
+                                @using (Html.BeginForm("AddToCart", "Cart"))
+                                {
+                                    @Html.Hidden("id", item.Id)
+                                    <button type="submit" class="btn btn-success">Aggiungi al carrello</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
