@@ -11,9 +11,7 @@ namespace Veterinario3.Models
         [Key]
         public int id { get; set; }
         public string CodiceArmadietto { get; set; }
-
-
-
+        public virtual ICollection<Box> Boxes { get; set; }
 
     }
 }

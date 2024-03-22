@@ -17,5 +17,7 @@ namespace Veterinario3.Models
         public virtual Product Product { get; set; }
         public int ContainerId { get; set; }
         public virtual Container Container { get; set; }
+        public int UsageId { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

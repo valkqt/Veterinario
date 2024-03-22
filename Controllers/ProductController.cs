@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Veterinario3.Models;
@@ -35,15 +40,10 @@ namespace Veterinario3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddProduct(Product product, string Tipo)
+        public ActionResult AddProduct(Product product, int UsageId)
         {
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(Tipo))
-                {
-                    product.Tipologia = Tipo;
-                }
-
                 var selectedCompany = db.Companies.FirstOrDefault(c => c.id == product.SelectedCompanyId);
                 if (selectedCompany != null)
                 {
@@ -52,6 +52,25 @@ namespace Veterinario3.Controllers
 
                 db.Products.Add(product);
                 db.SaveChanges();
+
+                var usage = db.Usages.Find(UsageId);
+                if (usage != null)
+                {
+                    var container = GetContainerByUsage(usage);
+
+                    var codiceCassetto = $"{container.CodiceArmadietto}-{usage.Utilizzo}";
+                    var newBox = new Box
+                    {
+                        CodiceCassetto = codiceCassetto,
+                        ContainerId = container.id,
+                        UsageId = usage.Id,
+                        Product = product
+                    };
+
+                    db.Boxes.Add(newBox);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -69,6 +88,28 @@ namespace Veterinario3.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        private Container GetContainerByUsage(Usage usage)
+        {
+            switch (usage.Utilizzo)
+            {
+                case "Vitamine":
+                case "Minerali":
+                case "Integratori alimentari":
+                    return db.Containers.FirstOrDefault(c => c.CodiceArmadietto == "Alimenti");
+                case "Diuretici":
+                case "Antidolorifici":
+                case "Lassativi":
+                case "Analgesici":
+                case "Antimicotici":
+                case "Disinfettanti":
+                case "Antiparassitari":
+                case "Emollienti cutanei":
+                    return db.Containers.FirstOrDefault(c => c.CodiceArmadietto == "Farmaci da banco");
+                default:
+                    return db.Containers.FirstOrDefault(c => c.CodiceArmadietto == "Farmaci con ricetta");
+            }
         }
     }
 }

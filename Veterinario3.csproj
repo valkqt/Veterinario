@@ -131,13 +131,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AnimalController.cs" />
-    <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ContainerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VetController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403211902204_Init.cs" />
+    <Compile Include="Migrations\202403211902204_Init.Designer.cs">
+      <DependentUpon>202403211902204_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admission.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Models\AnimalsViewModel.cs" />
     <Compile Include="Models\AnimalTherapyViewModel.cs" />
     <Compile Include="Models\Box.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\Placement.cs" />
@@ -218,11 +223,9 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Company\AddCompany.cshtml" />
-    <Content Include="Views\Box\Index.cshtml" />
     <Content Include="Views\Vet\Mensili.cshtml" />
-
     <Content Include="Views\Home\Login.cshtml" />
-    
+    <Content Include="Views\Container\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -254,6 +257,11 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202403211902204_Init.resx">
+      <DependentUpon>202403211902204_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
