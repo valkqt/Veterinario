@@ -2,24 +2,33 @@
     ViewBag.Title = "Procedi con l'ordine";
 }
 
-<h2>Procedi con l'ordine</h2>
+<main class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card cardLogin">
+                <div class="card-body card-bodyProduct">
+                    <h2 class="card-title text-center">Procedi con l'ordine</h2>
+                    @using (Html.BeginForm("CompleteOrder", "Cart", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("CompleteOrder", "Cart", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label for="codiceFiscale" class="form-label fw-bold">Codice Fiscale:</label>
+                            <input type="text" id="codiceFiscale" name="codiceFiscale" class="form-control border-success" required />
+                        </div>
 
-    <div class="form-group">
-        <label for="codiceFiscale">Codice Fiscale:</label>
-        <input type="text" id="codiceFiscale" name="codiceFiscale" class="form-control" required />
-    </div>
+                        if ((bool)ViewBag.HasPrescription)
+                        {
+                            <div class="mb-3">
+                                <label for="ricetta" class="form-label fw-bold">Ricetta:</label>
+                                <input type="text" id="ricetta" name="ricetta" class="form-control border-success" required />
+                            </div>
+                        }
 
-    if ((bool)ViewBag.HasPrescription)
-    {
-        <div class="form-group">
-            <label for="ricetta">Ricetta:</label>
-            <input type="text" id="ricetta" name="ricetta" class="form-control" required />
+                        <button type="submit" class="btn btn-success btn-block">Completa ordine</button>
+                    }
+                </div>
+            </div>
         </div>
-    }
-
-    <button type="submit">Completa ordine</button>
-}
+    </div>
+</main>
