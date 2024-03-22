@@ -17,8 +17,10 @@ namespace Veterinario3.Models
         [Column(TypeName = "datetime2")]
         public DateTime DataVendita { get; set; } = DateTime.Now;
         public string RicettaMedica { get; set; }
-        public int Prodotto { get; set; }
-        public virtual IEnumerable<Product> Products { get; set; }
+        public int ProductId{ get; set; }
+        public virtual Product Products { get; set; }
+
+        public int Quantità { get; set; }
 
     }
 }

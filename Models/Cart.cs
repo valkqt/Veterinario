@@ -14,7 +14,8 @@ namespace Veterinario3.Models
         [StringLength(16)]
         public string CodiceFiscale { get; set; }
         public string RicettaMedica { get; set; }
-        public int Prodotto { get; set; }
-        public virtual IEnumerable<Product> Products { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Products { get; set; }
+        public int Quantità { get; set; }
     }
 }

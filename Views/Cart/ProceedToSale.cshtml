@@ -1,0 +1,25 @@
+@{
+    ViewBag.Title = "Procedi con l'ordine";
+}
+
+<h2>Procedi con l'ordine</h2>
+
+@using (Html.BeginForm("CompleteOrder", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="codiceFiscale">Codice Fiscale:</label>
+        <input type="text" id="codiceFiscale" name="codiceFiscale" class="form-control" required />
+    </div>
+
+    if ((bool)ViewBag.HasPrescription)
+    {
+        <div class="form-group">
+            <label for="ricetta">Ricetta:</label>
+            <input type="text" id="ricetta" name="ricetta" class="form-control" required />
+        </div>
+    }
+
+    <button type="submit">Completa ordine</button>
+}

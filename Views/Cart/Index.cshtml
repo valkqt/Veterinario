@@ -1,0 +1,47 @@
+@model List<Veterinario3.Models.Product>
+
+@{
+    ViewBag.Title = "Ordinazione";
+}
+
+<h2>Ordina</h2>
+
+<p>
+    @using (Html.BeginForm("Index", "Cart", FormMethod.Get))
+    {
+        <input type="text" name="searchString" placeholder="Cerca prodotto per nome" />
+        <input type="submit" value="Search" />
+    }
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Quantità)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantità)
+            </td>
+            <td>
+                @using (Html.BeginForm("AddToCart", "Cart"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="Aggiungi al carrello" />
+                }
+            </td>
+        </tr>
+    }
+</table>
