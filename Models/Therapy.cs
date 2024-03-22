@@ -11,12 +11,12 @@ namespace Veterinario3.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Il campo Data è obbligatorio.")]
         [Column(TypeName = "datetime2")]
         public DateTime DataCura { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Il campo Diagnosi è obbligatorio.")]
         public string Diagnosi { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Il campo Descrizione è obbligatorio.")]
         public string DescrizioneCura { get; set; }
         public Animal Animal { get; set; }
 

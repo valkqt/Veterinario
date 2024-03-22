@@ -61,6 +61,21 @@ namespace Veterinario3.Controllers
 
                 return RedirectToAction("Therapy", new { id = animalId });
             }
+            else
+            {
+                var errors = new List<ModelError>();
+                foreach (var modelStateValue in ModelState.Values)
+                {
+                    foreach (var error in modelStateValue.Errors)
+                    {
+                        errors.Add(error);
+                    }
+                }
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+            }
 
             var animalForViewBag = db.Animals.Find(animalId);
             if (animalForViewBag == null)
