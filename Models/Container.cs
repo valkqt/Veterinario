@@ -12,5 +12,8 @@ namespace Veterinario3.Models
         public int id { get; set; }
         public string CodiceArmadietto { get; set; }
 
+
+
+
     }
 }

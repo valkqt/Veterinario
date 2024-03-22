@@ -4,6 +4,8 @@
 {
     @Html.AntiForgeryToken()
 
+   <h2 class="titoloPagina fw-bold">AGGIUNGI PRODOTTO</h2>
+
     <div>
         @Html.LabelFor(model => model.Nome)
         @Html.EditorFor(model => model.Nome)
@@ -31,6 +33,13 @@
         <p>Scegli l'utilizzo</p>
         @Html.DropDownList("UsageId", (IEnumerable<SelectListItem>)ViewBag.UsageOptions, "Seleziona Utilizzo")
     </div>
+
+    <div>
+        @Html.LabelFor(model => model.Ricetta)
+        @Html.CheckBoxFor(model => model.Ricetta)
+    </div>
+
+
 
     <input type="submit" value="Aggiungi Prodotto" />
 }
