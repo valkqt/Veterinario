@@ -60,6 +60,10 @@
                                     <li>@Html.ActionLink("Aggiungi prodotto", "AddProduct", "Product")</li>
                                     <li>@Html.ActionLink("Aggiungi ditta", "AddCompany", "Company")</li>
                                     <li>@Html.ActionLink("Trova prodotto", "Index", "Container")</li>
+                                    <li>
+                                        @Html.ActionLink("", "Cart", "Cart", null, new { @class = "nav-link" })
+                                        <img src="~/Content/Images/cart-outline.svg" alt="Logo" class="img-fluid" />
+                                    </li>
                                 </ul>
                             </li>
                         }
