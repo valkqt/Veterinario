@@ -4,19 +4,20 @@
     ViewBag.Title = "EditAdmission";
 }
 
-<h2>Modifica Dati Ricovero</h2>
+    <h2 class="text-center CustomHeader">Modifica Dati Ricovero</h2>
 
-@using (Html.BeginForm("EditAdmission", "Vet", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.id, new {@Value = $"{Model.id}"})
-    @Html.HiddenFor(m => m.animalID, new { @Value = $"{Model.animalID}"})
+    @using (Html.BeginForm("EditAdmission", "Vet", FormMethod.Post, new {@class = "EditAdmissionContainer"}))
+    {
+        @Html.HiddenFor(m => m.id, new { @Value = $"{Model.id}" })
+        @Html.HiddenFor(m => m.animalID, new { @Value = $"{Model.animalID}" })
 
-    @Html.LabelFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
-    @Html.EditorFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
+        @Html.LabelFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-label" } })
+        @Html.EditorFor(m => m.DataInizio, new { htmlAttributes = new { @class = "form-control", @max = $"{@DateTime.Now.ToString("yyyy-MM-dd")}" } })
 
-    @Html.LabelFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-label" } })
-    @Html.EditorFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.LabelFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-label" } })
+        @Html.EditorFor(m => m.DataFine, new { htmlAttributes = new { @class = "form-control" } })
 
 
-    <button type="submit" class="btn btn-primary">Conferma</button>
-}
+        <button type="submit" class="CustomButton">Conferma</button>
+    }
+

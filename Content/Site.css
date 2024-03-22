@@ -18,3 +18,141 @@ select,
 textarea {
     max-width: 280px;
 }
+
+:root {
+    --primary: #009E93;
+    --yellow: #F0CF50;
+    --primaryLight: #009e5a;
+}
+
+.CustomAlert {
+    width: 400px;
+    height: 100px;
+    animation: verticalMotion 0.3s ease-out, fadeIn 0.3s ease-in;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0.5rem;
+    left: calc(50vw - 200px);
+    font-size: 1.3rem;
+}
+
+.AlertSuccess {
+    background-color: var(--primary);
+    z-index: 10;
+    color: white;
+}
+
+.AlertWarning {
+    background-color: var(--yellow);
+    z-index: 10;
+    color: black;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes verticalMotion {
+    from {
+        transform: translateY(50px)
+    }
+
+    to {
+        transform: translateY(0)
+    }
+}
+
+
+.AnimalsTable td {
+    word-break: break-word;
+    max-width: 125px;
+    height: 65px;
+    position: relative;
+}
+
+    .AnimalsTable td button {
+        word-break: normal;
+    }
+
+.controlBox {
+    position: absolute;
+    min-width: 275px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    top: 0;
+    left: -125px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+    padding: 8px;
+    box-shadow: 2px 2px 2px #999999;
+}
+
+.CustomHeader {
+    border-bottom: 2px solid var(--primaryLight);
+    padding-bottom: 8px;
+    max-width: 500px;
+    margin: 0 auto 1rem auto;
+}
+
+.CustomButton {
+    background-color: var(--primary);
+    display: block;
+    border: none;
+    padding: 8px;
+    text-decoration: none;
+    color: white;
+}
+    .CustomButton:hover {
+        background-color: #009e5a;
+        color: white;
+    }
+
+
+.showControls {
+    padding: 4px 8px 8px 8px;
+    border-radius: 0.25rem;
+}
+
+.CustomSelect {
+    margin: 0 auto;
+    width: 250px;
+    padding: 7px;
+    background-color: white;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+}
+
+.CustomDisabled {
+    pointer-events: none;
+    background-color: #6e9f8a;
+}
+
+.EditAdmissionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    width: 400px;
+    margin: 0 auto;
+    padding: 8px;
+    gap: 8px;
+    border: 1px solid var(--primary);
+    border-radius: 0.375rem;
+}
+
+#AdmissionsControls {
+    max-width: 180px;
+}
+
+#AdmissionsControls * {
+    display: inline-block;
+    margin-left: 8px;
+}

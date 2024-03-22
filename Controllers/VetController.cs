@@ -276,10 +276,18 @@ namespace Veterinario3.Controllers
 
         public ActionResult MarkAsEnded(int id)
         {
-            var admission = db.Admissions.Where(a => a.id == id).FirstOrDefault();
-            admission.DataFine = DateTime.Now;
-            db.Entry(admission).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            try
+            {
+                var admission = db.Admissions.Where(a => a.id == id).FirstOrDefault();
+                admission.DataFine = DateTime.Now;
+                db.Entry(admission).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                TempData["terminato"] = "true";
+
+            } catch (Exception ex)
+            {
+                TempData["error"] = "true";
+            }
 
             return RedirectToAction("Ricoveri", "Vet");
         }
